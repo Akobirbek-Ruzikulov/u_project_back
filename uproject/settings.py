@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'accounts',
     'news',
     'course',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [

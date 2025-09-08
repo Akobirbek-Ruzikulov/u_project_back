@@ -1,14 +1,15 @@
 from django.db import models
+from accounts.models import BaseModel
 
 
-class Category(models.Model):
+class Category(BaseModel):
     name = models.CharField(max_length=255)
 
     def __str__(self):
         return self.name
 
 
-class SubCategory(models.Model):
+class SubCategory(BaseModel):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="subcategories")
     name = models.CharField(max_length=255)
 
@@ -16,7 +17,7 @@ class SubCategory(models.Model):
         return f"{self.category.name} - {self.name}"
 
 
-class Price(models.Model):
+class Price(BaseModel):
     subcategory = models.ForeignKey(SubCategory, on_delete=models.CASCADE, related_name="prices")
     title = models.CharField(max_length=255)
     desc = models.TextField(blank=True, null=True)

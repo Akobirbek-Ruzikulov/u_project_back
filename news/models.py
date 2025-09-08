@@ -1,7 +1,8 @@
 from django.db import models
+from accounts.models import BaseModel
 
 
-class News(models.Model):
+class News(BaseModel):
     title = models.CharField(max_length=255)
     desc = models.TextField()
     image = models.ImageField(upload_to="news/images/")

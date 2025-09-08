@@ -1,7 +1,5 @@
 from rest_framework import serializers
-from .models import Partner, Team, Portfolio
 from django.contrib.auth import get_user_model
-
 
 
 User = get_user_model()
@@ -23,21 +21,3 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 
-
-class PartnerSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Partner
-        fields = ['id', 'user', 'name', 'image', 'is_approved']
-        read_only_fields = ['user', 'is_approved']
-
-class TeamSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Team
-        fields = ['id', 'user', 'name', 'exp', 'position', 'avatar_img']
-        read_only_fields = ['user']
-
-class PortfolioSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Portfolio
-        fields = ['id', 'user', 'url_link', 'image', 'title', 'description']
-        read_only_fields = ['user']

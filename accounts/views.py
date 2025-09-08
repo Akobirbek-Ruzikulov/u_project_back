@@ -1,11 +1,11 @@
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, permissions, generics
 from django.contrib.auth import get_user_model, authenticate
-from .models import Partner, Team, Portfolio
-from .serializers import PartnerSerializer, TeamSerializer, PortfolioSerializer, UserSerializer
+from .serializers import  UserSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
+
 
 
 User = get_user_model()
@@ -100,29 +100,5 @@ class UserDetailView(APIView):
 
 
 
-class PartnerCreateView(generics.CreateAPIView):
-    queryset = Partner.objects.all()
-    serializer_class = PartnerSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user, is_approved=False)
 
 
-class TeamListCreateView(generics.ListCreateAPIView):
-    queryset = Team.objects.all()
-    serializer_class = TeamSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
-
-class PortfolioListCreateView(generics.ListCreateAPIView):
-    serializer_class = PortfolioSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-    def get_queryset(self):
-        return Portfolio.objects.filter(user=self.request.user)
-
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
